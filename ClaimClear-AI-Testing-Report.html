@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>ClaimClear AI — Testing Report</title>
+  <style>
+    @page { margin: 0.75in; size: letter; }
+    * { box-sizing: border-box; }
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      color: #1a1a1a;
+      line-height: 1.45;
+      font-size: 11pt;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      font-size: 22pt;
+      margin: 0 0 6px;
+      color: #1B2A4A;
+    }
+    h2 {
+      font-size: 13pt;
+      margin: 22px 0 8px;
+      color: #1B2A4A;
+      border-bottom: 1px solid #D7DBD1;
+      padding-bottom: 4px;
+    }
+    .meta {
+      color: #5B6B85;
+      font-size: 9.5pt;
+      margin-bottom: 16px;
+      font-family: "Segoe UI", sans-serif;
+    }
+    .callout {
+      background: #E2EFE9;
+      border-left: 3px solid #146B5D;
+      padding: 10px 12px;
+      margin: 12px 0 18px;
+      font-size: 10pt;
+      font-family: "Segoe UI", sans-serif;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9.5pt;
+      font-family: "Segoe UI", sans-serif;
+      margin-bottom: 8px;
+    }
+    th, td {
+      border: 1px solid #D7DBD1;
+      padding: 7px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: #EDF1EC;
+      color: #1B2A4A;
+      font-weight: 600;
+    }
+    .status-done { color: #0E4F44; font-weight: 600; }
+    .status-open { color: #B4632A; font-weight: 600; }
+    .status-partial { color: #5B6B85; font-weight: 600; }
+    ul { margin: 6px 0 10px 18px; padding: 0; }
+    li { margin-bottom: 4px; }
+    .footer {
+      margin-top: 28px;
+      font-size: 8.5pt;
+      color: #5B6B85;
+      font-family: "Segoe UI", sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <h1>ClaimClear AI — Testing Report</h1>
+  <p class="meta">
+    Consolidated QA, bug fixes, security, and accessibility evidence for the React demo<br />
+    Project: C:\Users\adbul\claimclear-ai · Generated: July 27, 2026
+  </p>
+
+  <div class="callout">
+    <strong>Scope:</strong> Client-side Vite + React demo (no backend). Automated Security Review
+    subagent could not run (no git commits yet); security findings came from a full source audit
+    plus <code>npm audit</code> (0 vulnerabilities).
+  </div>
+
+  <h2>1. Features tested</h2>
+  <table>
+    <thead>
+      <tr><th>Area</th><th>What was exercised</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Shell / nav</td><td>About toggle, demo badge, four tabs (Chat, Documents, Claim Status, Escalate), skip link</td></tr>
+      <tr><td>Chat</td><td>Welcome message, Send / Enter, four quick chips, keyword answers, escalation triggers, inline escalate CTAs</td></tr>
+      <tr><td>Documents</td><td>Four claim-type pills, checklists, progress, complete banner, per-type checkbox state</td></tr>
+      <tr><td>Claim Status</td><td>Lookup form, four sample claims, validation errors, status stamps / next steps</td></tr>
+      <tr><td>Escalate</td><td>Transcript, optional fields, connect confirmation with wait time</td></tr>
+      <tr><td>Cross-cutting</td><td>Mobile layout (≤700px), keyboard use, empty/wrong/long/strange inputs, error handling</td></tr>
+    </tbody>
+  </table>
+
+  <h2>2. Bugs found and fixed</h2>
+  <table>
+    <thead>
+      <tr><th>ID</th><th>Area</th><th>What broke</th><th>Fix</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>B1 High</td>
+        <td>Chat escalation</td>
+        <td>“Talk to a human” only escalated by accident; “talk to a person about my deductible” answered coverage</td>
+        <td>Expanded trigger phrases; chip sends “talk to a human agent”; human intent wins over keywords</td>
+      </tr>
+      <tr>
+        <td>B2 High</td>
+        <td>Mobile layout</td>
+        <td>375px page scrolled sideways (~436px); badge/tabs overflowed</td>
+        <td>Header wrap, clip overflow, nav scroll contained; page scrollWidth = clientWidth</td>
+      </tr>
+      <tr>
+        <td>B3 High</td>
+        <td>Chat long text</td>
+        <td>~2000 unbroken characters blew chat-log width (~19kpx)</td>
+        <td>overflow-wrap / word-break on bubbles; chat-log overflow-x hidden</td>
+      </tr>
+      <tr>
+        <td>B4 Medium</td>
+        <td>Documents a11y</td>
+        <td>Checkboxes announced as “on” with no name</td>
+        <td>Label-wrapped rows; names include document title + reason</td>
+      </tr>
+      <tr>
+        <td>A11y</td>
+        <td>Chat / focus</td>
+        <td>Chat input placeholder-only name; no skip link; tabs lacked current page</td>
+        <td>“Your question” label, skip link, aria-current, aria-invalid / describedby on errors</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>3. Security measures implemented</h2>
+  <table>
+    <thead>
+      <tr><th>Measure</th><th>Detail</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>No secrets in repo</td><td>No API keys, tokens, or .env credentials in source</td></tr>
+      <tr><td>XSS-safe UI rendering</td><td>User/bot text via React children (escaped); no dangerouslySetInnerHTML in components</td></tr>
+      <tr><td>Input length limits</td><td>Chat 2000; escalate fields 500 / note 2000; status claim/name max lengths</td></tr>
+      <tr><td>Validation + safe failures</td><td>Empty/wrong lookups and empty send show alerts; handlers wrapped in try/catch</td></tr>
+      <tr><td>Error boundary</td><td>React crashes show recovery UI instead of blank crash</td></tr>
+      <tr><td>Dependency audit</td><td>npm audit: 0 vulnerabilities (React 19, Vite 6)</td></tr>
+      <tr><td>Demo data isolation</td><td>Simulated claims only; no live backend / no real PII APIs</td></tr>
+    </tbody>
+  </table>
+
+  <h2>4. Accessibility features added</h2>
+  <ul>
+    <li><strong>Skip link</strong> — “Skip to main content” → #main-panel</li>
+    <li><strong>Labels</strong> — Chat “Your question”; status claim/last name; escalate name/claim/note</li>
+    <li><strong>Checkboxes</strong> — Document rows labeled; Space toggles</li>
+    <li><strong>Current page</strong> — Sidebar aria-current="page" on active tab</li>
+    <li><strong>Focus</strong> — :focus-visible teal outline (2px #146B5D)</li>
+    <li><strong>Errors</strong> — role="alert", aria-invalid, aria-describedby on chat/status/escalate fields</li>
+    <li><strong>Keyboard</strong> — Enter send, Space checkboxes, focusable native controls throughout</li>
+  </ul>
+
+  <h2>5. Security checklist</h2>
+  <table>
+    <thead>
+      <tr><th>Category</th><th>Protection</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Secrets</td><td>No hardcoded API keys, passwords, or bearer tokens</td><td class="status-done">Done</td></tr>
+      <tr><td>Secrets</td><td>.gitignore ready for future .env (add .env* patterns)</td><td class="status-partial">Partial</td></tr>
+      <tr><td>XSS</td><td>No dangerouslySetInnerHTML in app UI</td><td class="status-done">Done</td></tr>
+      <tr><td>XSS</td><td>Chat / transcript / confirm text rendered as text nodes</td><td class="status-done">Done</td></tr>
+      <tr><td>XSS</td><td>Boot fallback innerHTML is static string only (no user input)</td><td class="status-done">Done</td></tr>
+      <tr><td>Validation</td><td>Empty required fields blocked with messages</td><td class="status-done">Done</td></tr>
+      <tr><td>Validation</td><td>Max lengths on chat, status, escalate inputs</td><td class="status-done">Done</td></tr>
+      <tr><td>Validation</td><td>Claim number format pattern (e.g. CLM-#####)</td><td class="status-open">Open</td></tr>
+      <tr><td>Errors</td><td>React ErrorBoundary with Try again / Reload</td><td class="status-done">Done</td></tr>
+      <tr><td>Errors</td><td>Action alerts use role="alert" for failures</td><td class="status-done">Done</td></tr>
+      <tr><td>Errors</td><td>Avoid showing raw exception text in production UI</td><td class="status-open">Open</td></tr>
+      <tr><td>Network</td><td>No fetch to external claim APIs (client-only demo)</td><td class="status-done">Done</td></tr>
+      <tr><td>Dependencies</td><td>npm audit clean (0 vulns)</td><td class="status-done">Done</td></tr>
+      <tr><td>CSP</td><td>Content-Security-Policy on deploy</td><td class="status-open">Open</td></tr>
+      <tr><td>Supply chain</td><td>Self-host or SRI Google Fonts</td><td class="status-open">Open</td></tr>
+      <tr><td>PII</td><td>Only sample last names in client bundle (demo-labeled)</td><td class="status-done">Done</td></tr>
+      <tr><td>Transport</td><td>HTTPS required when deployed</td><td class="status-partial">Ops</td></tr>
+    </tbody>
+  </table>
+
+  <p class="footer">
+    Related canvases: claimclear-qa-checklist · claimclear-test-findings · claimclear-security-audit · claimclear-a11y-evidence<br />
+    ClaimClear AI testing report · Northfield Mutual demo · July 2026
+  </p>
+</body>
+</html>

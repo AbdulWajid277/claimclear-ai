@@ -1,0 +1,23 @@
+{
+  "name": "claimclear-ai",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "start": "serve -s dist -l ${PORT:-8080}"
+  },
+  "dependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "serve": "^14.2.6"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.62.0",
+    "@vitejs/plugin-react": "^4.5.2",
+    "playwright": "^1.62.0",
+    "vite": "^6.3.5"
+  }
+}

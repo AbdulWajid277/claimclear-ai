@@ -1,0 +1,38 @@
+export const claimData = [
+  {
+    claimNumber: 'CLM-10234',
+    lastName: 'Vance',
+    type: 'Auto Collision',
+    status: 'review',
+    label: 'In Review',
+    updated: '2 days ago',
+    next: 'Your adjuster is reviewing the repair estimate. Expect an update within 3 business days.',
+  },
+  {
+    claimNumber: 'CLM-58821',
+    lastName: 'Alvarez',
+    type: 'Windshield',
+    status: 'approved',
+    label: 'Approved – payment scheduled',
+    updated: '1 day ago',
+    next: 'Payment has been issued directly to your glass repair shop. No action needed.',
+  },
+  {
+    claimNumber: 'CLM-77410',
+    lastName: 'Chen',
+    type: 'Home Storm Damage',
+    status: 'info',
+    label: 'More information needed',
+    updated: '5 days ago',
+    next: "We're missing your contractor's repair estimate. Upload it in the Documents tab to move forward.",
+  },
+  {
+    claimNumber: 'CLM-90045',
+    lastName: 'Boateng',
+    type: 'Theft',
+    status: 'denied',
+    label: 'Denied',
+    updated: '1 week ago',
+    next: 'This claim was denied due to insufficient proof of ownership. You can appeal within 30 days.',
+  },
+];

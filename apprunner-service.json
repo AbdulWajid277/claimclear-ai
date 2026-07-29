@@ -1,0 +1,23 @@
+{
+  "ServiceName": "claimclear-ai",
+  "SourceConfiguration": {
+    "AuthenticationConfiguration": {
+      "ConnectionArn": "arn:aws:apprunner:us-east-1:726580148620:connection/claimclear-github/8e93db95c35546fbb6360a083c760d67"
+    },
+    "AutoDeploymentsEnabled": true,
+    "CodeRepository": {
+      "RepositoryUrl": "https://github.com/AbdulWajid277/claimclear-ai",
+      "SourceCodeVersion": {
+        "Type": "BRANCH",
+        "Value": "main"
+      },
+      "CodeConfiguration": {
+        "ConfigurationSource": "REPOSITORY"
+      }
+    }
+  },
+  "InstanceConfiguration": {
+    "Cpu": "256",
+    "Memory": "512"
+  }
+}
