@@ -5,10 +5,8 @@ RUN npm ci
 COPY . .
 RUN npm run build
 
-FROM public.ecr.aws/docker/library/node:22-alpine
-WORKDIR /app
-RUN npm install -g serve
-COPY --from=build /app/dist ./dist
-ENV PORT=8080
+FROM public.ecr.aws/nginx/nginx:stable-alpine
+COPY --from=build /app/dist /usr/share/nginx/html
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 8080
-CMD ["sh", "-c", "serve -s dist -l $PORT"]
+CMD ["nginx", "-g", "daemon off;"]
