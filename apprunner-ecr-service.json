@@ -14,7 +14,7 @@
     }
   },
   "InstanceConfiguration": {
-    "Cpu": "256",
-    "Memory": "512"
+    "Cpu": "1024",
+    "Memory": "2048"
   }
 }

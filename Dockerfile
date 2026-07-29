@@ -7,9 +7,8 @@ RUN npm run build
 
 FROM public.ecr.aws/docker/library/node:22-alpine
 WORKDIR /app
-COPY package*.json ./
-RUN npm ci --omit=dev
+RUN npm install -g serve
 COPY --from=build /app/dist ./dist
 ENV PORT=8080
 EXPOSE 8080
-CMD ["npm", "start"]
+CMD ["sh", "-c", "serve -s dist -l $PORT"]
