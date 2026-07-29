@@ -1,0 +1,20 @@
+{
+  "ServiceName": "claimclear-ai",
+  "SourceConfiguration": {
+    "AutoDeploymentsEnabled": true,
+    "AuthenticationConfiguration": {
+      "AccessRoleArn": "arn:aws:iam::726580148620:role/AppRunnerECRAccessRole"
+    },
+    "ImageRepository": {
+      "ImageIdentifier": "726580148620.dkr.ecr.us-east-1.amazonaws.com/claimclear-ai:latest",
+      "ImageRepositoryType": "ECR",
+      "ImageConfiguration": {
+        "Port": "8080"
+      }
+    }
+  },
+  "InstanceConfiguration": {
+    "Cpu": "256",
+    "Memory": "512"
+  }
+}
