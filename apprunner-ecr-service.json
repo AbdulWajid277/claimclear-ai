@@ -1,5 +1,5 @@
 {
-  "ServiceName": "claimclear-ai",
+  "ServiceName": "claimclear-ai-app",
   "SourceConfiguration": {
     "AutoDeploymentsEnabled": true,
     "AuthenticationConfiguration": {
@@ -9,7 +9,7 @@
       "ImageIdentifier": "726580148620.dkr.ecr.us-east-1.amazonaws.com/claimclear-ai:latest",
       "ImageRepositoryType": "ECR",
       "ImageConfiguration": {
-        "Port": "8080"
+        "Port": "80"
       }
     }
   },
